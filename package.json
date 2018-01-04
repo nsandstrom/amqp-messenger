@@ -1,0 +1,19 @@
+{
+  "name": "@n_sandstrom/amqp-messenger",
+  "version": "0.0.1",
+  "description": "Experimental inter service messenger on top of amqp",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Niklas Sandström <mr_n_sandstrom@hotmail.com>",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nsandstrom/amqp-messenger.git"
+  },
+  "dependencies": {
+    "amqplib": "^0.5.2",
+    "node-uuid": "^1.4.8"
+  }
+}
