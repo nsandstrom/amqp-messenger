@@ -139,8 +139,8 @@ setTimeout(function(){
 ```r
 connect(path)
 ```
-Connects to AMQP broker. Add credentials to path if needed.  
-amqp://user:password@host
+Connects to AMQP broker. Add credentials to path if needed:  
+`amqp://user:password@host`
 
 ---
 
@@ -148,7 +148,7 @@ amqp://user:password@host
 ```r
 initQueue(queue, [options])
 ```
-Asserts a queue. Wrapper for amqplib#assertQueue
+Asserts a queue. Wrapper for amqplib#assertQueue.
 
 ---
 
@@ -156,7 +156,7 @@ Asserts a queue. Wrapper for amqplib#assertQueue
 ```r
 disconnect()
 ```
-Disconnects from broker
+Disconnects from broker.
 
 ---
 
@@ -166,7 +166,7 @@ Disconnects from broker
 ```r
 listen(queue, [options])
 ```
-Listens for incomming messages on current routes
+Listens for incomming messages on current routes.
 
 ---
 
@@ -174,7 +174,7 @@ Listens for incomming messages on current routes
 ```r
 use([prefix], Router)
 ```
-Add a router to server
+Add a router to server.
 
 ---
 
@@ -182,7 +182,7 @@ Add a router to server
 ```r
 ack(message)
 ```
-Acknowledge a message
+Acknowledge a message.
 
 ---
 
@@ -192,7 +192,7 @@ Acknowledge a message
 ```r
 send(queue, request_path, [data], [options])
 ```
-Send a message. No reply expected
+Send a message. No reply expected.
 
 ---
 
@@ -200,7 +200,7 @@ Send a message. No reply expected
 ```r
 request(queue, request_path, [data], [options])
 ```
-Send a request. Returns a promise wich resolves as a message
+Send a request. Returns a promise wich resolves as a message.
 
 ---
 
@@ -210,7 +210,7 @@ Send a request. Returns a promise wich resolves as a message
 ```r
 use([prefix], Router)
 ```
-Add routes. Nested with prefix
+Add routes. Nested with prefix.
 
 ---
 
@@ -218,7 +218,7 @@ Add routes. Nested with prefix
 ```r
 route(route)
 ```
-Adds a route to router. Use ':' to parse parameters (ex "user/:id")
+Adds a route to router. Use ':' to parse parameters (ex "user/:id").  
 Returns a Route
 
 ---
@@ -227,7 +227,7 @@ Returns a Route
 ```r
 Route.rpc(function_name)
 ```
-Adds a function reference to 'rpc'-calls on route
+Adds a function reference to 'rpc'-calls on route.  
 Returns a Route
 
 ---
@@ -236,7 +236,7 @@ Returns a Route
 ```r
 Route.pub(function_name)
 ```
-Adds a function reference to 'pub'-calls on route
+Adds a function reference to 'pub'-calls on route.  
 Returns a Route
 
 ---
