@@ -1,6 +1,6 @@
 # AMQP Service messenger
 
-    npm install amqpMessenger
+    npm install @n_sandstrom/amqp-messenger
 
 
 An experimental library for using Amqp as an inter service messenger protocol.
