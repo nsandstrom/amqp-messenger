@@ -6,12 +6,12 @@ var amqpHostname = 'amqp://rabbitmq:rabbitmq@localhost'
 // This server processes tasks regarding weather forecasts
 
 // Define worker funtions
-function list_rain_tasks(params, data){return "all rain tasks.."}
-function show_rain_task(params, data){return ( "rain task at " + params.location) }
-function process_rain_task(params, data){}
-function list_temperature_tasks(params, data){return "all temperature tasks.."}
-function show_temperature_task(params, data){return ( "temperature task at " + params.location) }
-function process_temperature_task(params, data){}
+function list_rain_tasks(req, res){res.send("all rain tasks..")}
+function show_rain_task(req, res){res.send( "rain task at " + req.params.location) }
+function process_rain_task(req){}
+function list_temperature_tasks(req, res){res.send("all temperature tasks..")}
+function show_temperature_task(req, res){res.send( "temperature task at " + req.params.location) }
+function process_temperature_task(req){}
 
 
 let rainRouter = new messenger.Router()

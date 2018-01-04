@@ -6,14 +6,16 @@ var targetQueue = 'test_queue'
 // Set up a router
 
 // Define worker funtions
-function run_test(params, data){
-	console.log("Will run test: %s", params.id)
+function run_test(req){
+	console.log("Will run test: %s", req.params.id)
+	console.log(req.body)
 }
 
-function show_test(params, data){
-	return "processed data" 
+function show_test(req, res){
+	setTimeout(function(){
+		res.send({status: "OK"})
+	}, 500);
 }
-
 
 let testRouter = new messenger.Router()
 
@@ -38,7 +40,7 @@ setTimeout(function(){
 	messenger.send(targetQueue, reqPath, data, send_options ).then(function() {
 		console.log("Message sent")
 	}).catch(console.warn);
-}, 1000);
+}, 500);
 
 setTimeout(function(){
 	// Send a request
@@ -52,9 +54,10 @@ setTimeout(function(){
 		console.log("Received: " + body);
 		messenger.ack(message);
 	}).catch(console.warn);
-}, 	2000);
+}, 	1000);
+
 
 setTimeout(function(){
 	// Disconnect when all is done
 	messenger.disconnect()
-},  4000);
+},  2500);
