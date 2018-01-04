@@ -4,7 +4,8 @@
   "description": "Experimental inter service messenger on top of amqp",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "test-manual": "node test/router.js"
   },
   "author": "Niklas Sandström <mr_n_sandstrom@hotmail.com>",
   "license": "ISC",
