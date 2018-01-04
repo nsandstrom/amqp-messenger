@@ -1,6 +1,6 @@
 {
   "name": "@n_sandstrom/amqp-messenger",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Experimental inter service messenger on top of amqp",
   "main": "index.js",
   "scripts": {
