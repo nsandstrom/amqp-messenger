@@ -12,14 +12,20 @@ function run_test(req){
 }
 
 function show_test(req, res){
+	console.log(req)
+	res.send({status: "OK"})
+}
+
+function edit_test(req, res){
 	setTimeout(function(){
-		res.send({status: "OK"})
+		let reply = "Test updated with: " + req.body
+		res.send({status: reply})
 	}, 500);
 }
 
 let testRouter = new messenger.Router()
 
-testRouter.route(":id").rpc(show_test).pub(run_test)
+testRouter.route(":id").get(show_test).post(edit_test).pub(run_test)
 
 messenger.use("tests", testRouter)
 
@@ -33,7 +39,7 @@ messenger.connect(amqpHostname).then(function() {
 
 setTimeout(function(){
 	// Send a persistant message
-	console.log("Send a message after 1 sec")
+	console.log("Send a message after 0.5 sec")
 	let reqPath = "tests/1"
 	let send_options = { persistent: true }
 	let data = { timeSpan: 10 }
@@ -44,17 +50,31 @@ setTimeout(function(){
 
 setTimeout(function(){
 	// Send a request
-	console.log("Send a request after 2 sec")
+	console.log("Send a GET after 1 sec")
 	let reqPath = "tests/1"
 	let send_options = {}
 	let data = ""
 
-	messenger.request(targetQueue, reqPath, data).then(function(message) {
+	messenger.get(targetQueue, reqPath).then(function(message) {
 		var body = message.content.toString();
 		console.log("Received: " + body);
 		messenger.ack(message);
 	}).catch(console.warn);
 }, 	1000);
+
+setTimeout(function(){
+	// Send a request
+	console.log("Send a POST after 1.5 sec")
+	let reqPath = "tests/1"
+	let send_options = {}
+	let data = "New important parameter"
+
+	messenger.post(targetQueue, reqPath, data).then(function(message) {
+		var body = message.content.toString();
+		console.log("Received: " + body);
+		messenger.ack(message);
+	}).catch(console.warn);
+}, 	1500);
 
 
 setTimeout(function(){

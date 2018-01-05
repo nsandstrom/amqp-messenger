@@ -15,11 +15,11 @@ function process_temperature_task(params, data){}
 let rainRouter = new messenger.Router()
 let temperatureRouter = new messenger.Router()
 
-rainRouter.route("").rpc(list_rain_tasks)
-rainRouter.route(":location").rpc(show_rain_task).pub(process_rain_task)
+rainRouter.route("").get(list_rain_tasks)
+rainRouter.route(":location").get(show_rain_task).pub(process_rain_task)
 
-temperatureRouter.route("").rpc(list_temperature_tasks)
-temperatureRouter.route(":location").rpc(show_temperature_task).pub(process_temperature_task)
+temperatureRouter.route("").get(list_temperature_tasks)
+temperatureRouter.route(":location").get(show_temperature_task).pub(process_temperature_task)
 
 let mainRouter = new messenger.Router()
 mainRouter.use("rain", rainRouter)

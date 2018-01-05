@@ -17,24 +17,36 @@ setTimeout(function(){
 	messenger.send(targetQueue, reqPath, data, send_options ).then(function() {
 		console.log("Message sent")
 	}).catch(console.warn);
-}, 1000);
+},	1000);
 
 setTimeout(function(){
 	// Send a request
 	// Request temperature forecast in Visby
 	console.log("Send a request after 2 sec")
 	let reqPath = "temperature/visby"
-	let send_options = {}
-	let data = ""
 
-	messenger.request(targetQueue, reqPath, data).then(function(message) {
+	messenger.get(targetQueue, reqPath).then(function(message) {
 		var body = message.content.toString();
 		console.log("Received: " + body);
 		messenger.ack(message);
 	}).catch(console.warn);
-}, 2000);
+},	2000);
+
+setTimeout(function(){
+	// Send a request
+	// Create a task for Oslo
+	console.log("Post data after 3 sec")
+	let reqPath = "temperature"
+	let data = {location: "Oslo"}
+
+	messenger.post(targetQueue, reqPath, data).then(function(message) {
+		var body = message.content.toString();
+		console.log("Received: " + body);
+		messenger.ack(message);
+	}).catch(console.warn);
+},	3000);	
 
 setTimeout(function(){
 	// Disconnect when all is done
 	messenger.disconnect()
-},  3000);
+},	4000);

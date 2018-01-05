@@ -32,7 +32,7 @@ var messenger = require('@n_sandstrom/amqp-messenger');
 var amqpHostname = 'amqp://rabbitmq:rabbitmq@localhost'
 
 // Set up a router
-// This server processes tasks regarding weather
+// This server processes tasks regarding weather forecasts
 
 // Define worker funtions
 function list_rain_tasks(req, res){res.send("all rain tasks..")}
@@ -40,17 +40,18 @@ function show_rain_task(req, res){res.send( "rain task at " + req.params.locatio
 function process_rain_task(req){}
 function list_temperature_tasks(req, res){res.send("all temperature tasks..")}
 function show_temperature_task(req, res){res.send( "temperature task at " + req.params.location) }
+function create_temperature_task(req, res){res.send( "create task for " + req.body.location) }
 function process_temperature_task(req){}
 
 
 let rainRouter = new messenger.Router()
 let temperatureRouter = new messenger.Router()
 
-rainRouter.route("").rpc(list_rain_tasks)
-rainRouter.route(":location").rpc(show_rain_task).pub(process_rain_task)
+rainRouter.route("").get(list_rain_tasks)
+rainRouter.route(":location").get(show_rain_task).pub(process_rain_task)
 
-temperatureRouter.route("").rpc(list_temperature_tasks)
-temperatureRouter.route(":location").rpc(show_temperature_task).pub(process_temperature_task)
+temperatureRouter.route("").get(list_temperature_tasks).post(create_temperature_task)
+temperatureRouter.route(":location").get(show_temperature_task).pub(process_temperature_task)
 
 let mainRouter = new messenger.Router()
 mainRouter.use("rain", rainRouter)
@@ -99,27 +100,39 @@ setTimeout(function(){
   messenger.send(targetQueue, reqPath, data, send_options ).then(function() {
     console.log("Message sent")
   }).catch(console.warn);
-}, 1000);
+},  1000);
 
 setTimeout(function(){
   // Send a request
   // Request temperature forecast in Visby
   console.log("Send a request after 2 sec")
   let reqPath = "temperature/visby"
-  let send_options = {}
-  let data = ""
 
-  messenger.request(targetQueue, reqPath, data).then(function(message) {
+  messenger.get(targetQueue, reqPath).then(function(message) {
     var body = message.content.toString();
     console.log("Received: " + body);
     messenger.ack(message);
   }).catch(console.warn);
-}, 2000);
+},  2000);
+
+setTimeout(function(){
+  // Send a request
+  // Create a task for Oslo
+  console.log("Post data after 3 sec")
+  let reqPath = "temperature"
+  let data = {location: "Oslo"}
+
+  messenger.post(targetQueue, reqPath, data).then(function(message) {
+    var body = message.content.toString();
+    console.log("Received: " + body);
+    messenger.ack(message);
+  }).catch(console.warn);
+},  3000);  
 
 setTimeout(function(){
   // Disconnect when all is done
   messenger.disconnect()
-},  3000);
+},  4000);
 ```
     $ node send_example.js 
     Amqp connect
