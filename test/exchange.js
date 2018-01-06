@@ -7,12 +7,10 @@ var targetQueue = 'test_queue'
 
 // Define worker funtions
 function run_test(req){
-	console.log("Will run test: %s", req.params.id)
-	console.log(req.body)
+	console.log("Server: 'Will run test: %s'\n", req.params.id)
 }
 
 function show_test(req, res){
-	console.log(req)
 	res.send({status: "OK"})
 }
 
@@ -39,7 +37,7 @@ messenger.connect(amqpHostname).then(function() {
 
 setTimeout(function(){
 	// Send a persistant message
-	console.log("Send a message after 0.5 sec")
+	console.log("\nSend a message after 0.5 sec")
 	let reqPath = "tests/1"
 	let send_options = { persistent: true }
 	let data = { timeSpan: 10 }
@@ -57,7 +55,7 @@ setTimeout(function(){
 
 	messenger.get(targetQueue, reqPath).then(function(message) {
 		var body = message.content.toString();
-		console.log("Received: " + body);
+		console.log("Client received: %s\n",body);
 		messenger.ack(message);
 	}).catch(console.warn);
 }, 	1000);
@@ -71,7 +69,7 @@ setTimeout(function(){
 
 	messenger.post(targetQueue, reqPath, data).then(function(message) {
 		var body = message.content.toString();
-		console.log("Received: " + body);
+		console.log("Client received: %s\n",body);
 		messenger.ack(message);
 	}).catch(console.warn);
 }, 	1500);
