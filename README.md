@@ -209,11 +209,19 @@ Send a message. No reply expected.
 
 ---
 
-#### request
+#### get
 ```r
-request(queue, request_path, [data], [options])
+get(queue, request_path, [options])
 ```
-Send a request. Returns a promise wich resolves as a message.
+Send a get. Returns a promise wich resolves as a message.
+
+---
+
+#### post
+```r
+post(queue, request_path, [data], [options])
+```
+Send a post. Returns a promise wich resolves as a message.
 
 ---
 
@@ -236,11 +244,19 @@ Returns a Route
 
 ---
 
-#### Route.rpc
+#### Route.get
 ```r
-Route.rpc(function_name)
+Route.get(function_name)
 ```
-Adds a function reference to 'rpc'-calls on route.  
+Adds a function reference to 'get'-calls on route.  
+Returns a Route
+
+---
+#### Route.post
+```r
+Route.post(function_name)
+```
+Adds a function reference to 'post'-calls on route.  
 Returns a Route
 
 ---
